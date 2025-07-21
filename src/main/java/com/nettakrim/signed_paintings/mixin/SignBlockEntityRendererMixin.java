@@ -71,9 +71,8 @@ public abstract class SignBlockEntityRendererMixin implements SignBlockEntityRen
         return false;
     }
 
-    @Override
     public boolean rendersOutsideBoundingBox(SignBlockEntity blockEntity) {
-        return (hasPainting((SignBlockEntityAccessor)blockEntity) && SignedPaintingsClient.reduceCulling) || BlockEntityRenderer.super.rendersOutsideBoundingBox(blockEntity);
+        return (hasPainting((SignBlockEntityAccessor)blockEntity) && SignedPaintingsClient.reduceCulling);
     }
 
     @Override

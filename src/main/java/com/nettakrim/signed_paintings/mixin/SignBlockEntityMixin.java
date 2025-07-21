@@ -8,8 +8,8 @@ import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.entity.BlockEntityType;
 import net.minecraft.block.entity.SignBlockEntity;
 import net.minecraft.block.entity.SignText;
-import net.minecraft.nbt.NbtCompound;
-import net.minecraft.registry.RegistryWrapper;
+// import net.minecraft.nbt.NbtCompound;
+// import net.minecraft.registry.RegistryWrapper;
 import net.minecraft.util.math.BlockPos;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
@@ -18,6 +18,7 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
+import net.minecraft.storage.ReadView;
 
 @Mixin(SignBlockEntity.class)
 public abstract class SignBlockEntityMixin extends BlockEntity implements SignBlockEntityAccessor {
@@ -94,8 +95,8 @@ public abstract class SignBlockEntityMixin extends BlockEntity implements SignBl
         }
     }
 
-    @Inject(at = @At("TAIL"), method = "readNbt")
-    private void onNBTRead(NbtCompound nbt, RegistryWrapper.WrapperLookup registryLookup, CallbackInfo ci) {
+    @Inject(at = @At("TAIL"), method = "readData")
+    private void onNBTRead(ReadView view, CallbackInfo ci) {
         frontInfo.text = frontText;
         backInfo.text = backText;
         SignedPaintingsClient.info("nbt read "+frontText.getMessage(0, false).toString()+" at "+getPos(), false);
